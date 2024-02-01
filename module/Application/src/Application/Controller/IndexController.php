@@ -1,11 +1,4 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace Application\Controller;
 
@@ -14,8 +7,36 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+
     public function indexAction()
+    {
+
+//        $vehicle = [
+//            'id' => 2,
+//            'placa' => 'ABC1234',
+//            'renavam' => '123456789',
+//            'modelo' => 'Golf',
+//            'marca' => 'Volkswagen',
+//            'ano' => 2010,
+//            'cor' => 'Amarelo',
+//        ];
+//
+//        $veiculoService = $this->getServiceLocator()->get('Application\Service\VeiculoService');
+//        $vei = $veiculoService->updateVehicle($vehicle);
+//
+//
+//        return new ViewModel();
+
+    }
+
+    public function veiculoAction()
     {
         return new ViewModel();
     }
+
+    public function motoristaAction()
+    {
+        return new ViewModel();
+    }
+
 }

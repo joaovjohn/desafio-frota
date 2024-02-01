@@ -8,8 +8,12 @@
     ],
     "homepage": "http://framework.zend.com/",
     "require": {
-        "php": ">=5.5",
+        "php": ">=7.0",
         "zendframework/zendframework": "~2.5",
-        "doctrine/orm": "~2.4"
+        "doctrine/orm": "~2.4",
+        "doctrine/doctrine-module": "~1.2",
+        "doctrine/doctrine-orm-module": "~1.1.8",
+        "ext-pdo": "*",
+        "doctrine/migrations": "~1.5"
     }
 }

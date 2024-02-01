@@ -77,6 +77,10 @@ return array(
         ),
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
+            'Application\Service\VeiculoService' => function($sm) { // melhorar depois
+                $em = $sm->get('Doctrine\ORM\EntityManager');
+                return new Service\VeiculoService($em);
+            }
         ),
     ),
     'translator' => array(
