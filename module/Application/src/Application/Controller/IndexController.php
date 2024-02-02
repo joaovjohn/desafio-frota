@@ -11,32 +11,12 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
 
-//        $vehicle = [
-//            'id' => 2,
-//            'placa' => 'ABC1234',
-//            'renavam' => '123456789',
-//            'modelo' => 'Golf',
-//            'marca' => 'Volkswagen',
-//            'ano' => 2010,
-//            'cor' => 'Amarelo',
-//        ];
-//
-//        $veiculoService = $this->getServiceLocator()->get('Application\Service\VeiculoService');
-//        $vei = $veiculoService->updateVehicle($vehicle);
-//
-//
-//        return new ViewModel();
+        $veiculoService = $this->getServiceLocator()->get('Application\Service\VeiculoService');
+        $veiculos = $veiculoService->getAll();
 
+        $driverService = $this->getServiceLocator()->get('Application\Service\MotoristaService');
+        $motoristas = $driverService->getAll();
+
+        return new ViewModel(['veiculos' => $veiculos, 'motoristas' => $motoristas]);
     }
-
-    public function veiculoAction()
-    {
-        return new ViewModel();
-    }
-
-    public function motoristaAction()
-    {
-        return new ViewModel();
-    }
-
 }
