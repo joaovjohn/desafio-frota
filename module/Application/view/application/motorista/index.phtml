@@ -1,0 +1,37 @@
+<div class="container">
+    <h2>Lista de Motoristas</h2>
+    <button id="addVehicleButton" type="button" class="btn btn-primary">
+        Adicionar Motorista
+    </button>
+    <hr>
+    <?php if (!empty($this->motoristas)): ?>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>RG</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
+                    <th>Veiculo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($this->motoristas as $motorista): ?>
+                    <tr>
+                        <td><?= $this->escapeHtml($motorista['id']) ?></td>
+                        <td><?= $this->escapeHtml($motorista['nome']) ?></td>
+                        <td><?= $this->escapeHtml($motorista['rg']) ?></td>
+                        <td><?= $this->escapeHtml($motorista['cpf']) ?></td>
+                        <td><?= $this->escapeHtml($motorista['telefone']) ?></td>
+                        <td><?= $this->escapeHtml($motorista['veiculo']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <p>Nenhum motorista encontrado.</p>
+    <?php endif; ?>
+</div>
