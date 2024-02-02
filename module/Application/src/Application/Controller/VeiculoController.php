@@ -2,11 +2,8 @@
 
 namespace Application\Controller;
 
-use Application\Entity\Veiculo;
-use Application\Service\VeiculoService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Doctrine\ORM\EntityManager;
 
 class VeiculoController extends AbstractActionController
 {
@@ -25,11 +22,14 @@ class VeiculoController extends AbstractActionController
 
         if ($request->isPost()) {
             $veiculoService = $this->getServiceLocator()->get('Application\Service\VeiculoService');
-            $veiculoService->createVehicle($request->getPost()->toArray());
-            return $this->redirect()->toRoute('veiculo');
+            $newVehicle = $veiculoService->createVehicle($request->getPost()->toArray());
+            if ($newVehicle['success']) {
+                $this->view->setVariable('message', $newVehicle['message']);
+                return $this->redirect()->toRoute('veiculo');
+            }
         }
 
-        return new ViewModel();
+        return new ViewModel('message', $newVehicle['message']);
     }
 
     public function updateAction()
