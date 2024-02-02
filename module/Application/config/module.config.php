@@ -10,61 +10,50 @@
 namespace Application;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Zend\Mvc\Router\Http\Segment;
 
 return array(
     'router' => array(
         'routes' => array(
             'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'type' => Segment::class,
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/[:controller[/:action]]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
                         'action'     => 'index',
                     ),
                 ),
             ),
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'application' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/application',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-            ),
             'veiculo' => array(
-                'type' => 'segment',
+                'type' => Segment::class,
                 'options' => array(
-                    'route' => '/veiculo[/:action[/:id]]',
+                    'route'    => '/veiculo[/:action[/:id]]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9]+',
+                        'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Veiculo',
-                        'action' => 'index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'motorista' => array(
+                'type' => Segment::class,
+                'options' => array(
+                    'route'    => '/motorista[/:action[/:id]]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Motorista',
+                        'action'     => 'index',
                     ),
                 ),
             ),
@@ -77,10 +66,14 @@ return array(
         ),
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
-            'Application\Service\VeiculoService' => function($sm) { // melhorar depois
-                $em = $sm->get('Doctrine\ORM\EntityManager');
-                return new Service\VeiculoService($em);
-            }
+                        'Application\Service\VeiculoService' => function($sm) { // melhorar depois
+                        $em = $sm->get('Doctrine\ORM\EntityManager');
+                        return new Service\VeiculoService($em);
+                        },
+                        'Application\Service\MotoristaService' => function($sm) { // melhorar depois
+                            $em = $sm->get('Doctrine\ORM\EntityManager');
+                            return new Service\MotoristaService($em);
+                        },
         ),
     ),
     'translator' => array(
@@ -95,7 +88,9 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => Controller\IndexController::class
+            'Application\Controller\Index' => Controller\IndexController::class,
+            'Application\Controller\Veiculo' => Controller\VeiculoController::class,
+//            'Application\Controller\Motorista' => Controller\MotoristaController::class,
         ),
     ),
     'view_manager' => array(
@@ -112,6 +107,7 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+            'veiculo' => __DIR__ . '/../view/veiculo',
         ),
     ),
     // Placeholder for console routes
