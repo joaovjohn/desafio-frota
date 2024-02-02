@@ -90,7 +90,7 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => Controller\IndexController::class,
             'Application\Controller\Veiculo' => Controller\VeiculoController::class,
-//            'Application\Controller\Motorista' => Controller\MotoristaController::class,
+            'Application\Controller\Motorista' => Controller\MotoristaController::class,
         ),
     ),
     'view_manager' => array(
@@ -108,6 +108,7 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
             'veiculo' => __DIR__ . '/../view/veiculo',
+            'motorista' => __DIR__ . '/../view/motorista',
         ),
     ),
     // Placeholder for console routes
