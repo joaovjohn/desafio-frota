@@ -1,5 +1,6 @@
 Projeto Frota de Veiculos
 =======================
+------------
 Utilizando Zend Framework 2, Doctrine2, JQuery e outros recursos de sua preferência. Desenvolva
 um pequeno projeto que deve conter as seguintes telas:
    CRUD de Veículos (listar, cadastrar, editar e remover) com os seguintes campos:
@@ -15,7 +16,7 @@ um pequeno projeto que deve conter as seguintes telas:
       - CPF
       - Telefone
       - Veículo
-------------
+
 BONUS: Criar uma tela com um mapa utilizando Google Maps e inserir dentro do mapa alguns
 Markers com InfoWindows contendo Placa do veículo e Nome do motorista (Dados fixos no
 código).
