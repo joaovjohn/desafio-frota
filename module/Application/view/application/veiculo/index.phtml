@@ -1,1 +1,35 @@
-<?php echo ' carro'; ?>
+<div class="container">
+    <h2>Lista de Veículos</h2>
+    <?php if (!empty($this->veiculo)): ?>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Placa</th>
+                    <th>Renavam</th>
+                    <th>Modelo</th>
+                    <th>Marca</th>
+                    <th>Ano</th>
+                    <th>Cor</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($this->veiculo as $veiculo): ?>
+                    <tr>
+                        <td><?= $this->escapeHtml($veiculo['id']) ?></td>
+                        <td><?= $this->escapeHtml($veiculo['placa']) ?></td>
+                        <td><?= $this->escapeHtml($veiculo['renavam']) ?></td>
+                        <td><?= $this->escapeHtml($veiculo['modelo']) ?></td>
+                        <td><?= $this->escapeHtml($veiculo['marca']) ?></td>
+                        <td><?= $this->escapeHtml($veiculo['ano']) ?></td>
+                        <td><?= $this->escapeHtml($veiculo['cor']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <p>Nenhum veículo encontrado.</p>
+    <?php endif; ?>
+</div>
