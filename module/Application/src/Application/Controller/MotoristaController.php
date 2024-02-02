@@ -12,7 +12,10 @@ class MotoristaController extends AbstractActionController
         $driverService = $this->getServiceLocator()->get('Application\Service\MotoristaService');
         $drivers = $driverService->getAll();
 
-        return new ViewModel(['motoristas' => $drivers]);
+        $veiculoService = $this->getServiceLocator()->get('Application\Service\VeiculoService');
+        $vehicles = $veiculoService->getAll();
+
+        return new ViewModel(['motoristas' => $drivers, 'veiculos' => $vehicles]);
     }
 
     public function createAction()
@@ -23,10 +26,11 @@ class MotoristaController extends AbstractActionController
             $driverService = $this->getServiceLocator()->get('Application\Service\MotoristaService');
             $newDriver = $driverService->createDriver($request->getPost()->toArray());
             if ($newDriver['suceess']) {
-                $this->view->setVariable('message', $newDriver['message']);
-                return $this->redirect()->toRoute('motorista');
+                $this->flashMessenger()->addSuccessMessage($newDriver['message']);
+            } else {
+                $this->flashMessenger()->addErrorMessage($newDriver['message']);
             }
         }
-        return new ViewModel('message', $newDriver['message']);
+        return $this->redirect()->toRoute('motorista', ['action' => 'index']);
     }
 }
