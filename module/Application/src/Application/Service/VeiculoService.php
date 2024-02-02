@@ -98,14 +98,58 @@ class VeiculoService
         }
     }
 
-    public function deleteVehicle($vehicle)
+    public function deleteVehicle(int $idVehicle) : array
     {
+        try {
+            $vehicle = $this->em->getRepository(VeiculoEntity::class)->find($idVehicle);
+
+            if (empty($vehicle)) {
+                return [
+                    'success' => false,
+                    'message' => 'Veículo não encontrado',
+                ];
+            }
+
+            $this->em->remove($vehicle);
+            $this->em->flush();
+
+            return [
+                'success' => true,
+                'message' => 'Veículo deletado com sucesso',
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao deletar veículo: ' . $e->getMessage(),
+            ];
+        }
     }
 
-    public function getAll()
+    public function getAll() : array
     {
-    }
+        $vehicles = $this->em->getRepository(VeiculoEntity::class)->findAll();
 
+        $vehiclesArray = [];
+
+        foreach ($vehicles as $vehicle) {
+            if (method_exists($vehicle, 'toArray')) {
+                $vehiclesArray[] = $vehicle->toArray();
+            } else {
+                $vehiclesArray[] = [
+                    'id' => $vehicle->getId(),
+                    'placa' => $vehicle->getPlaca(),
+                    'renavam' => $vehicle->getRenavam(),
+                    'modelo' => $vehicle->getModelo(),
+                    'marca' => $vehicle->getMarca(),
+                    'ano' => $vehicle->getAno(),
+                    'cor' => $vehicle->getCor(),
+                ];
+            }
+        }
+
+        return $vehiclesArray;
+    }
 
 
     private function validateVehicle(array $vehicle)
