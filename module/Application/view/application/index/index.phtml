@@ -1,1 +1,59 @@
-<?php echo 'bomdnado'; ?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Challenge Traf</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center mt-5">Challenge Traf</h1>
+    <p class="text-center">Escolha uma opção abaixo:</p>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 text-center">
+            <a href="/veiculo" class="btn btn-primary btn-lg btn-block">Veículos</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <a href="/motorista" class="btn btn-primary btn-lg btn-block">Motoristas</a>
+        </div>
+    </div>
+
+    <?php
+    $limite = 4; // limitar a quantidade de veículos e motoristas que vao ser mostrados na home
+    $veiculos = array_slice($this->veiculos, 0, $limite);
+    $motoristas = array_slice($this->motoristas, 0, $limite);
+    ?>
+
+    <h2 class="mt-5">Veículos Cadastrados</h2>
+    <div class="row">
+        <?php foreach ($veiculos as $veiculo): ?>
+        <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $this->escapeHtml($veiculo['modelo']) ?></h5>
+                        <p class="card-text">Placa: <?= $this->escapeHtml($veiculo['placa']) ?></p>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <h2 class="mt-5">Motoristas Cadastrados</h2>
+    <div class="row">
+        <?php foreach ($motoristas as $motorista): ?>
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $this->escapeHtml($motorista['nome']) ?></h5>
+                        <p class="card-text">CPF: <?= $this->escapeHtml($motorista['cpf']) ?></p>
+                        <p class="card-text">Veículo: <?= $this->escapeHtml($motorista['veiculo']) ?> </p>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
