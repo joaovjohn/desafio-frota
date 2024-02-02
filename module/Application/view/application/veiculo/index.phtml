@@ -1,5 +1,63 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
 <div class="container">
-    <h2>Lista de Veículos</h2>
+    <h2 class="mb-3">Lista de Veículos</h2>
+    <div class="modal fade" id="criarVeiculoModal" tabindex="-1" role="dialog" aria-labelledby="criarVeiculoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="criarVeiculoModalLabel">Criar Veículo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/veiculo/create" method="post">
+                        <div class="form-group">
+                            <label for="placa">Placa:</label>
+                            <input type="text" class="form-control" maxlength="7" id="placa" name="placa">
+                        </div>
+                        <div class="form-group
+                            <label for="renavam">Renavam:</label>
+                            <input type="text" class="form-control" id="renavam" name="renavam">
+                        </div>
+                        <div class="form-group
+                            <label for="modelo">Modelo:</label>
+                            <input type="text" class="form-control" id="modelo" name="modelo">
+                        </div>
+                        <div class="form-group
+                            <label for="marca">Marca:</label>
+                            <input type="text" class="form-control" id="marca" name="marca">
+                        </div>
+                        <div class="form-group
+                            <label for="ano">Ano:</label>
+                            <input type="int" class="form-control" id="ano" name="ano">
+                        </div>
+                        <div class="form-group
+                            <label for="cor">Cor:</label>
+                            <input type="text" class="form-control" id="cor" name="cor">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Criar Veículo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="addVehicleButton" type="button" class="btn btn-primary mb-3">
+        Adicionar Veículo
+    </button>
+    <script>
+        $(document).ready(function(){
+            $("#addVehicleButton").click(function(){
+                $("#criarVeiculoModal").modal('show');
+            });
+        });
+    </script>
+    <hr>
     <?php if (!empty($this->veiculo)): ?>
         <div class="table-responsive">
             <table class="table">
