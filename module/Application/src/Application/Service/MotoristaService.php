@@ -47,7 +47,7 @@ class MotoristaService
                     'rg' => $driver->getRg(),
                     'cpf' => $driver->getCpf(),
                     'telefone' => $driver->getTelefone(),
-                    'veiculoId' => $driver->getVeiculoID(),
+                    'veiculoID' => $driver->getVeiculoID(),
                 ];
             }
         }
@@ -59,12 +59,21 @@ class MotoristaService
         try {
             $this->validateDriver($driver);
 
+            $veiculoRepository = $this->em->getRepository('Application\Entity\Veiculo');
+            $veiculo = $veiculoRepository->find($driver['veiculo']);
+            if (empty($veiculo)) {
+                return [
+                    'success' => false,
+                    'message' => 'Veículo não encontrado',
+                ];
+            }
+
             $motorista = new MotoristaEntity();
             $motorista->setNome($driver['nome']);
             $motorista->setRg($driver['rg']);
             $motorista->setCpf($driver['cpf']);
             $motorista->setTelefone($driver['telefone']);
-            $motorista->setVeiculoID($driver['veiculoId']);
+            $motorista->setVeiculoID($veiculo);
 
             $this->em->persist($motorista);
             $this->em->flush();

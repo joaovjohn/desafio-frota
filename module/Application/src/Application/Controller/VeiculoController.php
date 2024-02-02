@@ -21,11 +21,12 @@ class VeiculoController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+            $vehicleRequest = $request->getPost()->toArray();
+            $vehicleRequest['ano'] = (int)$vehicleRequest['ano'];
             $veiculoService = $this->getServiceLocator()->get('Application\Service\VeiculoService');
-            $newVehicle = $veiculoService->createVehicle($request->getPost()->toArray());
+            $newVehicle = $veiculoService->createVehicle($vehicleRequest);
             if ($newVehicle['success']) {
-                $this->view->setVariable('message', $newVehicle['message']);
-                return $this->redirect()->toRoute('veiculo');
+                return $this->redirect()->toRoute('veiculo', ['action' => 'index']);
             }
         }
 
