@@ -47,7 +47,10 @@ class MotoristaService
                     'rg' => $driver->getRg(),
                     'cpf' => $driver->getCpf(),
                     'telefone' => $driver->getTelefone(),
-                    'veiculoID' => $driver->getVeiculoID(),
+                    'veiculo' => $driver->getVeiculoID() ? [
+                        'id' => $driver->getVeiculoID()->getId(),
+                        'placa' => $driver->getVeiculoID()->getPlaca(),
+                    ] : null,
                 ];
             }
         }

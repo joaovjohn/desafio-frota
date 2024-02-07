@@ -1,93 +1,67 @@
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</head>
+<?php include 'head.phtml'; // incluindo os js e css necessários
+
+$successMessages = $this->flashMessenger()->getSuccessMessages();
+$errorMessages = $this->flashMessenger()->getErrorMessages();
+?>
 
 <div class="container">
     <h2 class="mb-3">Lista de Motoristas</h2>
-    <div class="modal fade" id="criarMotoristaModal" tabindex="-1" role="dialog" aria-labelledby="criarMotoristaModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="criarMotoristaModalLabel">Adicionar Motorista</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/motorista/create" method="post">
-                        <div class="form-group">
-                            <label for="nome">Nome:</label>
-                            <input type="text" required class="form-control" id="nome" name="nome">
-                        </div>
-                        <div class="form-group">
-                            <label for="rg">RG:</label>
-                            <input type="text" required maxlength="20" class="form-control" id="rg" name="rg">
-                        </div>
-                        <div class="form-group
-                            <label for="cpf">CPF:</label>
-                            <input type="text" required maxlength="11" class="form-control" id="cpf" name="cpf">
-                        </div>
-                        <div class="form-group
-                            <label for="telefone">Telefone:</label>
-                            <input type="text" class="form-control" id="telefone" name="telefone">
-                        </div>
-                        <div class="form-group">
-                            <label for="veiculo">Veículo:</label>
-                            <select class="form-control" id="veiculo" required name="veiculo">
-                                <?php foreach ($this->veiculos as $veiculo): ?>
-                                    <option value="<?= $this->escapeHtml($veiculo['id']) ?>">
-                                        <?= $this->escapeHtml($veiculo['marca']) ?> <?= $this->escapeHtml($veiculo['placa']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Adicionar Motorista</button>
-                    </form>
-                </div>
-            </div>
+
+    <?php foreach ($successMessages as $message): ?>
+        <div class="alert alert-success">
+            <?= $this->escapeHtml($message) ?>
+        </div>
+    <?php endforeach; ?>
+
+    <?php foreach ($errorMessages as $message): ?>
+        <div class="alert alert-danger">
+            <?= $this->escapeHtml($message) ?>
+        </div>
+    <?php endforeach; ?>
+
+    <?php include 'create.phtml'; // incluindo o que existe no modal para criar motorista ?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#criarMotoristaModal">
+                Adicionar Motorista
+            </button>
         </div>
     </div>
-    <button id="addDriverButton" type="button" class="btn btn-primary mb-3">
-        Adicionar Motorista
-    </button>
-    <script>
-        $(document).ready(function(){
-            $("#addDriverButton").click(function(){
-                $("#criarMotoristaModal").modal('show');
-            });
-        });
-    </script>
-    <hr>
-    <?php if (!empty($this->motoristas)): ?>
-        <div class="table-responsive">
+    <div class="row mt-3">
+        <div class="col-md-12">
             <table class="table">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nome</th>
                     <th>RG</th>
                     <th>CPF</th>
                     <th>Telefone</th>
-                    <th>Veiculo</th>
+                    <th>Veículo</th>
+                    <th style="text-align: center;">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($this->motoristas as $motorista): ?>
+
+                <?php
+                foreach ($this->motoristas as $motorista): ?>
                     <tr>
-                        <td><?= $this->escapeHtml($motorista['id']) ?></td>
                         <td><?= $this->escapeHtml($motorista['nome']) ?></td>
                         <td><?= $this->escapeHtml($motorista['rg']) ?></td>
                         <td><?= $this->escapeHtml($motorista['cpf']) ?></td>
                         <td><?= $this->escapeHtml($motorista['telefone']) ?></td>
-                        <td><?= $this->escapeHtml($motorista['veiculo']) ?></td>
+                        <td><?= $this->escapeHtml($motorista['veiculo']['placa']) ?></td>
+                        <td style="text-align: center;">
+                            <div style="display: inline-flex; justify-content: center; gap: 10px;">
+                                <a href="/motorista/update/<?= $this->escapeHtml($motorista['id']) ?>" class="btn btn-primary">Editar</a>
+                                <a href="/motorista/delete/<?= $this->escapeHtml($motorista['id']) ?>" class="btn btn-danger">Excluir</a>
+                            </div>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-    <?php else: ?>
-        <p>Nenhum motorista encontrado.</p>
-    <?php endif; ?>
+    </div>
 </div>
+<script src="/public/js/script.js"></script>

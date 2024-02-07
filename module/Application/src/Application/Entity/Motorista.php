@@ -39,8 +39,7 @@ class Motorista
 
     /**
      * @ORM\ManyToOne(targetEntity="Veiculo")
-     * @ORM\JoinColumn(name="veiculoId", referencedColumnName="id")
-     * @var Veiculo
+     * @ORM\JoinColumn(name="veiculoID", referencedColumnName="id")
      */
     protected $veiculoID;
 
@@ -97,5 +96,17 @@ class Motorista
     public function setVeiculoID($veiculoID)
     {
         $this->veiculoID = $veiculoID;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'nome' => $this->getNome(),
+            'rg' => $this->getRg(),
+            'cpf' => $this->getCpf(),
+            'telefone' => $this->getTelefone(),
+            'veiculo' => $this->getVeiculoID() ? $this->getVeiculoID()->toArray() : null,
+        ];
     }
 }

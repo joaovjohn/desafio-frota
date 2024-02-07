@@ -110,4 +110,17 @@ class Veiculo
     {
         $this->cor = $cor;
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'placa' => $this->getPlaca(),
+            'renavam' => $this->getRenavam(),
+            'modelo' => $this->getModelo(),
+            'marca' => $this->getMarca(),
+            'ano' => $this->getAno(),
+            'cor' => $this->getCor(),
+        ];
+    }
 }
